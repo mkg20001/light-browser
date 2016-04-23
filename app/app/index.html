@@ -1,0 +1,154 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="LightBrowser">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="generator" content="Polymer">
+  <title>light-browser</title>
+
+  <!-- Place favicon.ico in the `app/` directory -->
+
+  <!-- build:css styles/main.css -->
+  <link rel="stylesheet" href="styles/main.css">
+  <!-- endbuild-->
+
+  <!-- build:js bower_components/webcomponentsjs/webcomponents-lite.min.js -->
+  <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+  <!-- endbuild -->
+
+  <!-- Because this project uses vulcanize this should be your only html import
+       in this file. All other imports should go in elements.html -->
+  <link rel="import" href="elements/elements.html">
+
+  <!-- For shared styles, shared-styles.html import in elements.html -->
+  <style is="custom-style" include="shared-styles"></style>
+</head>
+
+<body unresolved>
+  <!-- build:remove -->
+  <span id="browser-sync-binding"></span>
+  <!-- endbuild -->
+  <style is="custom-style">
+  :root {
+          --paper-input-container-color: #afafaf;
+          --paper-input-container-focus-color: white;
+          --paper-input-container-input-color: white;
+  }
+  </style>
+  <template is="dom-bind" id="app">
+
+    <paper-drawer-panel id="paperDrawerPanel" responsive-width="3600000px">
+      <!-- Drawer Scroll Header Panel -->
+      <!--<paper-scroll-header-panel drawer fixed>
+
+        <paper-toolbar id="drawerToolbar">
+          <span class="menu-name">Menu</span>
+        </paper-toolbar>
+
+        <paper-menu class="app-menu" attr-for-selected="data-route" selected="[[route]]">
+          <a data-route="home" href="{{baseUrl}}">
+            <iron-icon icon="home"></iron-icon>
+            <span>Home</span>
+          </a>
+
+          <a data-route="users" href="{{baseUrl}}users">
+            <iron-icon icon="info"></iron-icon>
+            <span>Users</span>
+          </a>
+
+          <a data-route="contact" href="{{baseUrl}}contact">
+            <iron-icon icon="mail"></iron-icon>
+            <span>Contact</span>
+          </a>
+        </paper-menu>
+      </paper-scroll-header-panel>-->
+
+      <!-- Main Area -->
+      <paper-scroll-header-panel main id="headerPanelMain">
+        <!-- Main Toolbar -->
+        <div class="paper-header">
+          <paper-toolbar id="mainToolbar">
+            <paper-icon-button icon="arrow-back"></paper-icon-button>
+            <paper-icon-button icon="arrow-forward"></paper-icon-button>
+            <paper-icon-button icon="refresh"></paper-icon-button>
+            <paper-icon-button icon="home"></paper-icon-button>
+
+            <paper-input style="width:100%;" no-label-float label="Url..."></paper-input>
+
+            <span class="space"></span>
+
+            <!-- Toolbar icons -->
+            <paper-icon-button icon="star"></paper-icon-button>
+            <paper-icon-button icon="search"></paper-icon-button>
+            <paper-icon-button icon="settings"></paper-icon-button>
+
+            <!-- Application name -->
+
+            <!-- Application sub title -->
+            <!--<div class="bottom bottom-container">
+              <div class="bottom-title">The future of the web today</div>
+            </div>!-->
+            <!--<paper-icon-button icon="close" on-click="close"></paper-icon-button>
+            <paper-icon-button icon="remove" on-click="mini"></paper-icon-button>
+            <paper-icon-button icon="image:crop-square" on-click="maxi"></paper-icon-button>
+            <window-controls id="wcc"></window-controls>!-->
+          </paper-toolbar>
+          <paper-tabs style="background-color:#3f51b5;color:#ffffff;" selected="[[cstab]]" on-click="tabit" id="tabss" autoselect autoselect-delay="1000">
+            <template is="dom-repeat" items="{{tabs}}" align-bottom>
+              <paper-tab>{{item.name}}<span class="flex"><paper-icon-button icon="close" on-click="tabclose"></paper-icon-button></paper-tab>
+            </template>
+          </paper-tabs>
+        </div>
+
+        <!-- Main Content -->
+        <div style="width:100%;height:100%;">
+          <iron-pages attr-for-selected="data-route" style="overflow:hidden;padding:0px !important;width:100%;height:100%;" selected="{{stab}}">
+            <template is="dom-repeat" items="{{tabs}}">
+              <section data-route="{{item.id}}">
+                <iframe nwdisable nwfaketop src="{{item.src}}" style="width:100%;height:100%;border:none !important;"></iframe>
+              </section>
+            </template>
+            <!--<section data-route="home" tabindex="-1">
+
+              <paper-material elevation="1">
+                <p>This is another card.</p>
+              </paper-material>
+            </section>!-->
+          </iron-pages>
+        </div>
+      </paper-scroll-header-panel>
+    </paper-drawer-panel>
+
+    <paper-toast id="toast">
+      <span class="toast-hide-button" role="button" tabindex="0" onclick="app.$.toast.hide()">Ok</span>
+    </paper-toast>
+
+    <!-- Uncomment next block to enable Service Worker support (1/2) -->
+    <!--
+    <paper-toast id="caching-complete"
+                 duration="6000"
+                 text="Caching complete! This app will work offline.">
+    </paper-toast>
+
+    <platinum-sw-register auto-register
+                          clients-claim
+                          skip-waiting
+                          base-uri="bower_components/platinum-sw/bootstrap"
+                          on-service-worker-installed="displayInstalledToast">
+      <platinum-sw-cache default-cache-strategy="fastest"
+                         cache-config-file="cache-config.json">
+      </platinum-sw-cache>
+    </platinum-sw-register>
+    -->
+
+  </template>
+
+  <!-- build:js scripts/app.js -->
+  <script src="scripts/app.js"></script>
+  <!-- endbuild-->
+</body>
+
+</html>

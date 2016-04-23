@@ -2,7 +2,7 @@
   "name": "light-browser",
   "version": "1.0.0",
   "description": "A simple and light browser to use as a base for your own",
-  "main": "index.js",
+  "main": "app/app/index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -15,19 +15,16 @@
     "browser",
     "nwjs"
   ],
-  "main": "app/dist/index.html",
   "window": {
     "title": "Light Browser",
     "icon": "app/dist/images/icon.png",
     "toolbar": true,
-    "frame": false,
+    "frame": true,
     "width": 800,
     "height": 500,
     "position": "mouse",
     "min_width": 400,
-    "min_height": 200,
-    "max_width": 800,
-    "max_height": 600
+    "min_height": 200
   },
   "webkit": {
     "plugin": true
@@ -41,10 +38,9 @@
   "dependencies": {
     "app-module-path": "^1.0.6",
     "colors": "^1.1.2",
-    "nw-builder": "^2.2.0",
-
     "del": "^2.0.2",
     "es6-promise": "^3.1.2",
+    "express": "^4.13.4",
     "glob-all": "^3.0.1",
     "gulp": "^3.8.5",
     "gulp-autoprefixer": "^3.1.0",
@@ -64,6 +60,7 @@
     "gulp-useref": "^2.1.0",
     "gulp-vulcanize": "^6.0.0",
     "merge-stream": "^1.0.0",
+    "nw-builder": "^2.2.0",
     "require-dir": "^0.3.0",
     "run-sequence": "^1.0.2",
     "vulcanize": ">= 1.4.2"

@@ -1,0 +1,50 @@
+
+<link rel="import" href="../bower_components/paper-styles/typography.html">
+
+<dom-module id="window-controls">
+  <template>
+    <style include="shared-styles">
+      paper-icon-button {
+        -webkit-app-region: no-drag;
+        @apply(--layout-inline);
+        @apply(--layout-center-center);
+        position: relative;
+        vertical-align: middle;
+      }
+    </style>
+
+    <content></content>
+
+  </template>
+
+  <script>
+      Polymer({
+        is: 'window-controls',
+        properties: {
+        },
+        win:require('nw.gui').Window.get(),
+        mini:function() {
+          this.win.minimize();
+        },
+        max:false,
+        close:function() {
+          this.win.close();
+        },
+        maximize:function() {
+          this.set("max",true);
+          this.win.maximize();
+        },
+        unmaximize:function() {
+          this.win.unmaximize();
+          this.set("max",false);
+        },
+        maxi:function() {
+          if (this.max) {
+            this.unmaximize();
+          } else {
+            this.maximize();
+          }
+        }
+      });
+  </script>
+</dom-module>
