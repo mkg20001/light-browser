@@ -8,7 +8,10 @@ require('app-module-path').addPath(pth.join(process.cwd(),"src"));
 require("colors");
 //require('nw.gui').Window.get().showDevTools();
 
-
+  app.mainurl=window.location.href;
+  function gUrl(p) {
+    return app.mainurl.replace("index.html",p);
+  }
   // Sets app default base URL
   app.baseUrl = '/';
   if (window.location.port === '') {  // if production
@@ -38,26 +41,90 @@ require("colors");
         app.$.wcc[f]();
       };
     });*/
-    app.tabit();
+    emptyTab();
   });
   function frameres() {
     var wh=document.body.scrollHeight-112;
-    document.querySelectorAll("iframe").map(function(e) {
-      e.style.height=wh+"px";
-    });
+    app.wh=wh;
+    app.set("wh",wh);
+    updateTabs();
   }
 
-  app.tabs=[{src:"https://google.com",id:0,name:"Google"},{src:"http://ubuntu.com",id:1,name:"Ubuntu"}];
-  app.stab=0;
-  app.tabit=function() {
-    app.stab=app.$.tabss.selected;
+  //app.tabs=[{src:"https://google.com",id:0,name:"Google"},{src:"http://ubuntu.com",id:1,name:"Ubuntu"}];
+  app.tabs=[];
+  function setTab(i) {
+    app.$.tabss.selected=i;
+    app.stab=i;
     app.url=app.tabs[app.stab].url;
-    frameres();
+  }
+  function emptyTab() {
+    newTab({src:gUrl("newtab.html"),name:"New Tab"});
+  }
+  function newTab(i) {
+    updateTabs(i);
+    app.callow=app.tabs.length<10;
+    setTab(app.tabs.length-1);
+  }
+  app.newTab=emptyTab;
+  app.callow=true;
+  app.tabit=function() {
+    setTab(app.$.tabss.selected);
+    setTimeout(updateTabs,100);
+  };
+  frameres();
+  app.urlFire=function(e) {
+    updateTabs({src:this.$.urlIn.value,name:this.$.urlIn.value});
+    app.$.urlIn.value="";
+  };
+  app.urlKey=function(e) {
+    if (e.keyCode===13) {
+      app.urlFire();
+    } else {
+
+    }
   };
   app.tabclose=function(e1) {
     var tabid=e1.toElement.parentElement.parentElement.parentElement.parentElement.dataHost.item.id;
     app.tabs[tabid]=null;
     app.set("tabs."+tabid,null);
+    updateTabs();
+  };
+  //var gtest;
+  /*function iload(frame) {
+    console.log(frame);
+    gtest=frame;
+    app.url=frame.contentWindow.location.href;
+    app.tabs[app.stab].src=frame.contentWindow.location.href;
+  }
+  function ierror(frame) {
+    frame.contentWindow.location.href=gUrl("error.html");
+  }*/
+  function updateTabs(inp) {
+    var o=[];
+    var i=0;
+    var wh=document.body.scrollHeight-112;
+    var ok=app.tabs.filter(function(t) {
+      if (t) return t;
+    });
+    if (inp) ok.push(inp);
+    for (var p in ok) {
+      var t=ok[p];
+      t.id=i;
+      t.wh=wh;
+      i++;
+      o.push(t);
+    }
+    app.set("tabs",o);
+    for (var pp in o) {
+      var tt=o[pp];
+      if (tt.own) tt.own._item(tt);
+      if (tt.tabown) tt.tabown._item(tt);
+    }
+    return o;
+  }
+
+  app.openSettings=function() {
+    newTab({name:"Settings",src:gUrl("settings.html"),internal:true});
   };
 
   // Scroll page to top and expand header

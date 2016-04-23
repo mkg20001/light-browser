@@ -1,0 +1,61 @@
+
+<link rel="import" href="../bower_components/paper-styles/typography.html">
+
+<dom-module id="window-tab">
+  <template>
+    <style include="shared-styles">
+      paper-icon-button {
+        -webkit-app-region: no-drag;
+        @apply(--layout-inline);
+        @apply(--layout-center-center);
+        position: relative;
+        vertical-align: middle;
+      }
+    </style>
+
+    <template is="dom-if" if="{{it.internal}}">
+      <iframe src="{{src}}" style$="width:100%;height:{{wh}}px;border:none !important;" onload="ttt.loaded(this);"></iframe>
+    </template>
+    <template is="dom-if" if="{{!it.internal}}">
+      <iframe src="{{src}}" nwdisable nwfaketop style$="width:100%;height:{{wh}}px;border:none !important;" onload="ttt.loaded(this);"></iframe>
+    </template>
+
+  </template>
+
+  <script>
+  var ttt;
+  Polymer({
+    is: 'window-tab',
+    properties: {
+      item:{
+        type:Object,
+        observer:"_item"
+      }
+    },
+    wh:app.wh,
+    src:"",
+    it:{},
+    _item:function(i) {
+      this.it=i;
+      this.set("it",i);
+      if (i.src !=this.src) this.set("src",i.src);
+      this.wh=i.wh;
+      //console.log("observer",i);
+      ttt=this;
+      app.tabs[i.id].own=this;
+    },
+    loaded:function(frame) {
+      console.log(frame);
+      var url=frame.contentWindow.window.location.href;
+      var name=url;
+      var t=frame.contentWindow.document.querySelectorAll("title")[0];
+      if (t) name=t.innerText;
+      name=(name.length > 25) ? name.substr(0,25-1)+'…' : name;
+      app.tabs[this.it.id].name=name;
+      app.tabs[this.it.id].url=url;
+      console.log("lodname",name,app.tabs[this.it.id],this.it);
+      updateTabs();
+    }
+  });
+  </script>
+</dom-module>

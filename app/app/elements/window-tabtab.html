@@ -1,0 +1,49 @@
+
+<link rel="import" href="../bower_components/paper-styles/typography.html">
+
+<dom-module id="window-tabtab">
+  <template>
+    <style include="shared-styles">
+      paper-icon-button {
+        -webkit-app-region: no-drag;
+        @apply(--layout-inline);
+        @apply(--layout-center-center);
+        position: relative;
+        vertical-align: middle;
+      }
+    </style>
+
+    <div>
+      {{name}}
+      <paper-icon-button icon="close" on-click="tabclose"></paper-icon-button>
+    </div>
+
+  </template>
+
+  <script>
+  var ttt;
+  Polymer({
+    is: 'window-tabtab',
+    properties: {
+      item:{
+        type:Object,
+        observer:"_item"
+      }
+    },
+    it:{},
+    name:"Loading...",
+    remv:false,
+    _item:function(i) {
+      this.it=i;
+      this.set("it",i);
+      this.name=i.name;
+      //console.log("observer.tab",i);
+      app.tabs[i.id].tabown=this;
+      if (this.remv) {app.tabs[this.it.id]=null;updateTabs();}
+    },
+    tabclose:function() {
+      this.remv=true;
+    }
+  });
+  </script>
+</dom-module>
