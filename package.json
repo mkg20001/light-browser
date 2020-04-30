@@ -4,7 +4,9 @@
   "description": "A simple and light browser to use as a base for your own",
   "main": "app/app/index.html",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "repository": {
     "type": "git",
@@ -63,6 +65,8 @@
     "nw-builder": "^2.2.0",
     "require-dir": "^0.3.0",
     "run-sequence": "^1.0.2",
-    "vulcanize": ">= 1.4.2"
-  }
+    "vulcanize": ">= 1.4.2",
+    "snyk": "^1.316.1"
+  },
+  "snyk": true
 }
