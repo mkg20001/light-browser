@@ -1,0 +1,13 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.16.0
+ignore: {}
+# patches apply the minimum changes required to fix a vulnerability
+patch:
+  'npm:lodash:20180130':
+    - gulp-html-extract > cheerio > lodash:
+        patched: '2020-07-18T21:26:11.335Z'
+    - nw-builder > plist > xmlbuilder > lodash:
+        patched: '2020-07-18T21:26:11.335Z'
+  'npm:mime:20170907':
+    - nw-builder > request > form-data > mime:
+        patched: '2020-07-18T21:26:11.335Z'
